@@ -39,7 +39,10 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ## Verify final image and contents are correct.
 RUN bootc container lint
 
-# Add your kernel RPMs  
-COPY rpms/*.rpm /tmp/rpms/  
-RUN rpm-ostree override replace /tmp/rpms/kernel*.rpm && \  
-    rm -rf /tmp/rpms
+# Download kernel RPMs from remote location during build  
+RUN curl -Lo /tmp/kernel.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
+    curl -Lo /tmp/kernel-core.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-core-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
+    curl -Lo /tmp/kernel-modules.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-modules-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
+    curl -Lo /tmp/kernel-modules-core.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-modules-core-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
+    rpm-ostree override replace /tmp/kernel*.rpm && \  
+    rm -rf /tmp/*.rpm
