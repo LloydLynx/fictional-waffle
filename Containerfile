@@ -43,5 +43,5 @@ RUN bootc container lint
 RUN curl -Lo /tmp/kernel.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
     curl -Lo /tmp/kernel-core.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-core-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
     curl -Lo /tmp/kernel-modules.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-modules-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
-    curl -Lo /tmp/kernel-modules-core.rpm https://kojipkgs.fedoraproject.org//packages/kernel/6.17.0/0.rc3.31.fc43/x86_64/kernel-modules-core-6.17.0-0.rc3.31.fc43.x86_64.rpm && \  
-    rpm-ostree override remove kernel kernel-core kernel-modules --install /tmp/kernel*.rpm
+    rpm-ostree override replace /tmp/kernel.rpm /tmp/kernel-core.rpm /tmp/kernel-modules.rpm && \  
+    rm -rf /tmp/*.rpm
