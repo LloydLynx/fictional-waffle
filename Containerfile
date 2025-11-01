@@ -38,3 +38,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
+
+# Add your kernel RPMs  
+COPY rpms/*.rpm /tmp/rpms/  
+RUN rpm-ostree override replace /tmp/rpms/kernel*.rpm && \  
+    rm -rf /tmp/rpms
